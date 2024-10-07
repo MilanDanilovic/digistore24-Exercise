@@ -38,7 +38,7 @@ openapi.yaml
 
 - [x] Implement the backend architecture from scratch, which will support the Angular application's API calls.
 - [x] Implement error handling.
-- [ ] Implement the plugin system for extensibility (Chatbot).
+- [x] Implement the plugin system for extensibility (Chatbot).
 - [x] Add authentication for message sending.
 
 ### Frontend:
