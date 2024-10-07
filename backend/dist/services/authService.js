@@ -19,7 +19,9 @@ const users = [];
 const register = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedPassword = yield bcrypt_1.default.hash(password, 10);
     users.push({ username, password: hashedPassword });
-    return { username };
+    const accessToken = (0, jwtUtils_1.signAccessToken)(username);
+    const refreshToken = (0, jwtUtils_1.signRefreshToken)(username);
+    return { username, accessToken, refreshToken };
 });
 exports.register = register;
 const login = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,6 +31,8 @@ const login = (username, password) => __awaiter(void 0, void 0, void 0, function
     const isPasswordValid = yield bcrypt_1.default.compare(password, user.password);
     if (!isPasswordValid)
         throw new Error("Invalid credentials");
-    return (0, jwtUtils_1.signToken)(user.username);
+    const accessToken = (0, jwtUtils_1.signAccessToken)(user.username);
+    const refreshToken = (0, jwtUtils_1.signRefreshToken)(user.username);
+    return { accessToken, refreshToken };
 });
 exports.login = login;
