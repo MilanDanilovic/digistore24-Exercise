@@ -21,9 +21,6 @@ import { Subscription } from 'rxjs';
         <h2 class="text-2xl font-semibold text-center text-gray-800">
           Chat Room
         </h2>
-        <p class="text-center text-gray-500">
-          Messages are updated in real-time
-        </p>
       </div>
 
       <div class="space-y-4 max-h-[300px] overflow-scroll" #chatContainer>

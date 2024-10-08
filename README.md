@@ -43,16 +43,16 @@ openapi.yaml
 
 ### Frontend:
 
-- [ ] Optimize data bindings and state management.
-- [ ] Improve the user interface responsiveness.
+- [x] Optimize data bindings and state management.
+- [x] Improve the user interface responsiveness.
 - [ ] Implement a feature to display message status (sent, received).
-- [ ] Add seamless communication with the backend application.
-- [ ] Create a login form to allow users to log in and send messages.
+- [x] Add seamless communication with the backend application.
+- [x] Create a login form to allow users to log in and send messages.
 
 ### API:
 
-- [ ] Review and if necessary correct RESTful API practices.
-- [ ] Ensure best practices in the API definition.
+- [x] Review and if necessary correct RESTful API practices.
+- [x] Ensure best practices in the API definition.
 
 ## General instructions
 
@@ -65,11 +65,11 @@ openapi.yaml
 
 ## Deliverables
 
-- [ ] send in files with your comments by (one of)
+- [x] send in files with your comments by (one of)
   - Inline-Code-Comments and send us the files
   - drop the files anywhere and send us the link
   - upload the code to your own Repository (Avoid forking the repository and creating a PR, as this would make your solution visible to others)
-- [ ] A brief report summarizing the changes you made, why, and any additional recommendations if they had more time.
+- [x] A brief report summarizing the changes you made, why, and any additional recommendations if they had more time.
 
 ## Run instructions
 
@@ -79,3 +79,5 @@ openapi.yaml
 - Access the frontend at `http://localhost:4200`.
 - Access the backend at `http://localhost:3000`.
 - Note: The project is set up to run on localhost by default.
+
+## CHECK myBrief.txt

@@ -1,0 +1,7 @@
+- I tried added simple authentication, make whole project separated in files for better readability, 
+- Made a mess for not using socket.io form start for real time communication
+- Saw on the end that I forgor status checking for messages
+- Redux store was not necessary for my solution
+- In my opinion Backend is better structured and written
+- You can track my progress in commits
+- Thank you for your time
