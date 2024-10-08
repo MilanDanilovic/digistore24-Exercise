@@ -5,17 +5,27 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const authenticate = (req: Request, res: Response, next: NextFunction): any => {
-  const token = req.headers["authorization"];
+  const authHeader = req.headers["authorization"];
+
+  if (!authHeader) {
+    return res.status(401).json({ error: "Unauthorized - No token provided" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: "Unauthorized" }); // Return Response, but no need to return void
+    return res.status(401).json({ error: "Unauthorized - Token missing" });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+
     req.body.user = decoded;
-    next(); // Proceed with the next middleware
+
+    next();
   } catch (error) {
-    res.status(403).json({ error: "Invalid token" });
+    console.error("JWT verification failed:", error);
+    return res.status(403).json({ error: "Invalid or expired token" });
   }
 };
 

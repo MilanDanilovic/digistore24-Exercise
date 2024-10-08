@@ -19,7 +19,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
   try {
     const { accessToken, refreshToken } = await login(username, password);
-    res.status(200).json({ accessToken, refreshToken });
+    res.status(200).json({ username, accessToken, refreshToken });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }

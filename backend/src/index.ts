@@ -5,10 +5,27 @@ import authRoutes from "./routes/authRoutes";
 import messageRoutes from "./routes/messageRoutes";
 import { loadPlugins } from "./utils/pluginLoader";
 import path from "path";
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
+
+var whitelist = ["http://localhost:4200"];
+var corsOptions = {
+  origin: function (origin: any, callback: any) {
+    if (!origin || whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,POST,PUT,DELETE,OPTIONS",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 
 // Loading a Chatbot plugins, which will be used to send a message to the user
@@ -18,8 +35,8 @@ const pluginsPath = path.join(__dirname, "plugins");
 loadPlugins(pluginsPath);
 
 // Routes
-app.use("/api", authRoutes);
-app.use("/api", messageRoutes);
+app.use("", authRoutes);
+app.use("", messageRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
