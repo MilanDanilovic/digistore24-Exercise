@@ -10,8 +10,23 @@ const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const messageRoutes_1 = __importDefault(require("./routes/messageRoutes"));
 const pluginLoader_1 = require("./utils/pluginLoader");
 const path_1 = __importDefault(require("path"));
+const cors = require("cors");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+var whitelist = ["http://localhost:4200"];
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || whitelist.includes(origin)) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(body_parser_1.default.json());
 // Loading a Chatbot plugins, which will be used to send a message to the user
 // The plugins are located in the plugins folder
@@ -19,8 +34,8 @@ app.use(body_parser_1.default.json());
 const pluginsPath = path_1.default.join(__dirname, "plugins");
 (0, pluginLoader_1.loadPlugins)(pluginsPath);
 // Routes
-app.use("/api", authRoutes_1.default);
-app.use("/api", messageRoutes_1.default);
+app.use("", authRoutes_1.default);
+app.use("", messageRoutes_1.default);
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

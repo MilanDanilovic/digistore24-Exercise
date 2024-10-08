@@ -27,7 +27,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     try {
         const { accessToken, refreshToken } = yield (0, authService_1.login)(username, password);
-        res.status(200).json({ accessToken, refreshToken });
+        res.status(200).json({ username, accessToken, refreshToken });
     }
     catch (error) {
         res.status(400).json({ error: error.message });
