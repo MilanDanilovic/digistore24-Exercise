@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
 import { register } from '../auth/auth.actions';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-register',
@@ -66,8 +67,17 @@ export class RegisterComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/chat']);
+    }
+  }
   onSubmit() {
     // Dispatch the register action
     console.log('Registering', this.username, this.password);

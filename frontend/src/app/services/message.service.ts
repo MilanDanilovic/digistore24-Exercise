@@ -48,9 +48,13 @@ export class MessageService {
 
   async sendMessage(messageText: string) {
     try {
-      const token = await firstValueFrom(this.store.select(selectAccessToken));
-      const user = await firstValueFrom(this.store.select(selectAuthUsername));
-
+      const token =
+        (await firstValueFrom(this.store.select(selectAccessToken))) ||
+        localStorage.getItem('accessToken');
+      const user =
+        (await firstValueFrom(this.store.select(selectAuthUsername))) ||
+        localStorage.getItem('username');
+      console.log('token:', token);
       const res = await fetch('http://127.0.0.1:3000/message', {
         method: 'POST',
         headers: {

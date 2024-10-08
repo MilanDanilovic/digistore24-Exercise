@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForOf } from '@angular/common'; // Import NgForOf for *ngFor
-import { MessageComponent } from './message.component'; // Import MessageComponent
+import {
+  Component,
+  OnInit,
+  AfterViewChecked,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+} from '@angular/core';
+import { NgForOf } from '@angular/common';
+import { MessageComponent } from './message.component';
 import { MessageService } from '../services/message.service';
 import { Subscription } from 'rxjs';
 
@@ -19,7 +26,7 @@ import { Subscription } from 'rxjs';
         </p>
       </div>
 
-      <div class="space-y-4 max-h-[300px] overflow-scroll">
+      <div class="space-y-4 max-h-[300px] overflow-scroll" #chatContainer>
         <div *ngFor="let message of messages; index as i">
           <app-message [message]="message" [no]="i"></app-message>
         </div>
@@ -27,9 +34,12 @@ import { Subscription } from 'rxjs';
     </div>
   `,
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
   messages: any[] = [];
   messagesSubscription!: Subscription;
+  refreshTimeout: any;
+
+  @ViewChild('chatContainer') private chatContainer!: ElementRef;
 
   constructor(private messageService: MessageService) {}
 
@@ -39,16 +49,39 @@ export class ChatComponent implements OnInit {
       .getMessagesObservable()
       .subscribe((messages) => {
         this.messages = messages;
+        this.scrollToBottom(); // Scroll down whenever messages are updated
       });
 
     // Fetch all messages initially
     this.messageService.all();
+
+    // Set a timer to refresh the page after 1 minute (60000 milliseconds) because the messages are not updated in real-time, I should have used socket.io
+    this.refreshTimeout = setTimeout(() => {
+      window.location.reload();
+    }, 60000);
   }
 
   ngOnDestroy() {
-    // Unsubscribe when the component is destroyed
     if (this.messagesSubscription) {
       this.messagesSubscription.unsubscribe();
     }
+
+    // Clear the refresh timeout to prevent it from running if the component is destroyed
+    if (this.refreshTimeout) {
+      clearTimeout(this.refreshTimeout);
+    }
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.chatContainer.nativeElement.scrollTop =
+        this.chatContainer.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Scroll Error:', err);
+    }
+  }
+
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
   }
 }
