@@ -31,4 +31,9 @@ export class AuthService {
       )
       .pipe(map((response) => response));
   }
+
+  // Logout method that returns an observable
+  logout(): Observable<void> {
+    return this.http.post<void>('http://127.0.0.1:3000/logout', {});
+  }
 }

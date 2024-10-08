@@ -7,6 +7,7 @@ import {
   register,
   registerSuccess,
   registerFailure,
+  logout,
 } from './auth.actions'; // Import actions
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
@@ -65,5 +66,17 @@ export class AuthEffects {
         )
       )
     )
+  );
+  // Logout Effect
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(logout),
+        tap(() => {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        })
+      ),
+    { dispatch: false }
   );
 }

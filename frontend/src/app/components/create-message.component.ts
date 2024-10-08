@@ -7,19 +7,24 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
   standalone: true,
   imports: [FormsModule], // Ensure FormsModule is imported
   template: `
-    <form (ngSubmit)="onSubmit()">
-      <label>
-        <span>Write Message</span>
+    <form (ngSubmit)="onSubmit()" class="p-4 bg-gray-100 rounded-lg shadow-lg">
+      <label class="block mb-4">
+        <span class="text-lg font-semibold text-gray-700">Write a Message</span>
         <textarea
-          class="block w-full"
+          class="block w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
           [(ngModel)]="messageText"
           name="messageText"
+          rows="4"
+          placeholder="Type your message here..."
           required
         ></textarea>
       </label>
 
-      <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4">
-        Send
+      <button
+        type="submit"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+      >
+        Send Message
       </button>
     </form>
   `,
